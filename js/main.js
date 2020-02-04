@@ -5,16 +5,14 @@ $(document).ready(onInit);
 
 function onInit() {
     renderPortfolio();
-    renderModals();
 }
 
 function renderPortfolio() {
     var projs = getProjsToDisplay();
 
     var strHTMLs = projs.map((proj) => {
-        var idx = projs.indexOf(proj);
         return `<div class="col-md-4 col-sm-6 portfolio-item">
-                    <a class="portfolio-link" data-toggle="modal" href="#portfolioModal${idx}">
+                    <a onclick="renderModal('${proj.id}')" class="portfolio-link" data-toggle="modal" href="#portfolioModal">
                         <div class="portfolio-hover">
                             <div class="portfolio-hover-content">
                             <i class="fa fa-plus fa-3x"></i>
@@ -31,12 +29,10 @@ function renderPortfolio() {
     document.querySelector('.projs-portfolio').innerHTML = strHTMLs.join('');
 }
 
-function renderModals() {
-    var projs = getProjsToDisplay();
-
-    var strHTMLs = projs.map((proj) => {
-        var idx = projs.indexOf(proj);
-        return `<div class="portfolio-modal modal fade" id="portfolioModal${idx}" tabindex="-1" role="dialog" aria-hidden="true">
+function renderModal(id) {
+    var proj = getProjById(id);
+    var strHTML = 
+            `<div class="portfolio-modal modal fade" id="portfolioModal" tabindex="-1" role="dialog" aria-hidden="true">
                     <div class="modal-dialog">
                         <div class="modal-content">
                             <div class="close-modal" data-dismiss="modal">
@@ -68,9 +64,8 @@ function renderModals() {
                             </div>
                         </div>
                     </div>
-                </div>`
-    });
-    document.querySelector('.portfolio-modals').innerHTML = strHTMLs.join('');
+                </div>`;
+    document.querySelector('.portfolio-modal').innerHTML = strHTML;
 }
 
 function onSubmit() {
